@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d1c"><title>An Invitation · Nocturne Hotel</title><link rel="stylesheet" href="style.css">
+</head>
+<body class="checkin-page invitation-page">
+  <main class="invitation-wrap">
+    <div class="invitation-seal" aria-hidden="true">☾</div>
+    <article class="invitation-letter">
+      <p class="eyebrow">NOCTURNE HOTEL · PRIVATE INVITATION</p>
+      <p class="letter-salutation">To the weary traveler,</p>
+      <h1>A room away<br>from everything.</h1>
+      <p>Somewhere beyond the noise of the waking world, beyond the endless demands and distractions, there exists a place rarely found and seldom spoken of.</p>
+      <p>A place where the night feels gentle, where city lights shimmer beyond your window, and where time seems to move a little more slowly.</p>
+      <p>You are cordially invited to <strong>Nocturne Hotel</strong>.</p>
+      <p>Here, you may leave the day's worries at the door. Settle into your room, listen to the distant rain, watch the stars drift overhead, and give your thoughts the space they deserve.</p>
+      <p>There is no hurry here. No expectation of perfection. Whether you arrive with a great ambition, a little unfinished work, or simply a desire for quiet, your room will be waiting.</p>
+      <div class="letter-signoff"><span>YOUR ROOM HAS BEEN PREPARED</span><strong>ROOM 804</strong><em>With warm regards, The Management</em></div>
+      <button class="primary invitation-accept" id="enterRoom">Accept invitation <span>↗</span></button>
+      <p class="letter-footnote">No pressure to stay. No pressure to achieve. The room is yours whenever you need it.</p>
+    </article>
+  </main>
+  <script>
+    document.getElementById('enterRoom').addEventListener('click', () => {
+      sessionStorage.setItem('nocturneCheckedIn', 'yes');
+      location.href = 'room.html';
+    });
+    if (sessionStorage.getItem('nocturneCheckedIn') === 'yes') location.replace('room.html');
+  </script>
+</body></html>

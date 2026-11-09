@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d1c">
+  <title>Room 804 — Nocturne</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="room-page">
+  <main class="room-stage" id="roomStage">
+    <section class="room-shell" id="roomShell" aria-label="Interactive hotel room">
+      <div id="roomInterior">
+      <img class="room-art" src="assets/room-reference.jpg" alt="Room 804 overlooking a neon city at night">
+
+      <div class="room-decor-layer" id="roomDecorLayer" aria-label="Your placed decorations"></div>
+      <div class="object-layer" aria-label="Room interactions">
+        <button class="object-hit lamp-hit" data-object="lamp" data-tooltip="Lamp · Change lighting" aria-label="Change room lighting"></button>
+        <button class="object-hit tablet-hit" data-object="tablet" data-tooltip="Tablet · Focus session controls" aria-label="Open focus session controls"></button>
+        <button class="object-hit speaker-hit" data-object="speaker" data-tooltip="Speaker · Music controls" aria-label="Open music controls"></button>
+        <button class="object-hit door-hit" data-object="door" data-tooltip="Balcony door · Step outside" aria-label="Go to the balcony"></button>
+      </div>
+
+      <div class="room-ui" aria-label="Room controls">
+        <div class="room-id"><span class="room-id-mark">☾</span><span>NOCTURNE <i></i> ROOM 804</span></div>
+        <button class="guide-button" id="replayTour" type="button" title="Speak with Aster">Hotel Guide</button>
+        <button class="ui-icon-button" id="fullscreenButton" type="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+      </div>
+
+      <div class="control-scrim" id="controlScrim"></div>
+
+      <section class="focus-experience" id="focusExperience" hidden aria-live="polite" aria-label="Focus session in progress">
+        <div class="focus-center-card">
+          <p class="focus-center-eyebrow">NOCTURNE · FOCUS SESSION</p>
+          <span class="focus-center-state" id="timerState">FOCUSING</span>
+          <strong class="focus-center-time" id="timerReadout">25:00</strong>
+          <p class="focus-center-note" id="focusCenterNote">Your room is quiet. Stay with one thing.</p>
+          <div class="focus-progress-wrap" aria-label="Focus session progress">
+            <div class="focus-progress-track" id="focusProgressTrack">
+              <div class="focus-progress-fill" id="focusProgressFill"></div>
+              <div class="focus-break-markers" id="focusBreakMarkers" aria-hidden="true"></div>
+            </div>
+            <div class="focus-progress-legend"><span>START</span><span>25%</span><span>50%</span><span>75%</span><span>FINISH</span></div>
+          </div>
+          <div class="focus-center-actions" id="focusWorkActions">
+            <button class="focus-center-pause" id="focusOverlayPause" type="button">Pause</button>
+            <button class="focus-center-end" id="focusOverlayEnd" type="button">End session</button>
+          </div>
+          <div class="focus-break-actions" id="focusBreakActions" hidden>
+            <p>Take a moment outside if you would like. — Aster🌙</p>
+            <button class="focus-center-pause" id="goBalconyBreak" type="button">Take balcony break ↗</button>
+            <button class="focus-center-end" id="skipBalconyBreak" type="button">Skip break</button>
+          </div>
+          <p class="focus-center-footnote">A five-minute balcony break is offered at 25%, 50%, and 75%. Your browser controls which tab is in front.</p>
+        </div>
+      </section>
+
+      <section class="control-panel focus-panel" id="focusPanel" role="dialog" aria-modal="true" aria-labelledby="focusTitle" aria-hidden="true">
+        <button class="panel-close" type="button" data-close-panel aria-label="Close focus controls">×</button>
+        <p class="panel-eyebrow">ROOM 804 · TABLET</p>
+        <h2 id="focusTitle">Focus session</h2>
+        <p class="panel-description">Settle in. The room will keep time while you work. — Aster🌙</p>
+        <div class="session-intention">
+          <label class="control-label" for="sessionGoal">YOUR FOCUS GOAL <span class="optional-label">OPTIONAL</span></label>
+          <input id="sessionGoal" type="text" maxlength="70" placeholder="e.g. Finish my geography notes" autocomplete="off">
+          <label class="control-label" for="sessionReward">WRITE YOUR OWN REWARD <span class="optional-label">OPTIONAL</span></label>
+          <input id="sessionReward" type="text" list="rewardSuggestions" maxlength="100" placeholder="Something nice to look forward to…" autocomplete="off">
+          <datalist id="rewardSuggestions">
+            <option value="Step onto the balcony and enjoy the view"></option>
+            <option value="Listen to one favorite song"></option>
+            <option value="Take a short stretch and water break"></option>
+            <option value="Make a cup of tea or a favorite drink"></option>
+            <option value="Read a chapter of a book"></option>
+            <option value="Spend a little time on a game"></option>
+            <option value="Enjoy the satisfaction of finishing"></option>
+          </datalist>
+        </div>
+        <button class="workshop-toggle" id="workshopToggle" type="button" aria-expanded="false" aria-controls="workshopContent">Optional: visit the Little Workshop <span>＋</span></button>
+        <section class="decor-workshop" id="workshopContent" aria-labelledby="workshopTitle" hidden>
+          <div class="workshop-heading">
+            <div>
+              <p class="workshop-kicker">THE LITTLE WORKSHOP</p>
+              <h3 id="workshopTitle">Make Room 804 yours.</h3>
+            </div>
+            <span class="workshop-parts" id="workshopParts">0 LUMEN</span>
+          </div>
+          <p class="workshop-copy">Choose anything from the catalog and build it when you have enough lumen. Focus sessions add materials gradually; nothing is automatic, and nothing expires. — Aster🌙</p>
+          <div class="workshop-resource-row"><div class="workshop-part-track" aria-label="Progress toward next lumen"><span id="workshopPartFill"></span></div><strong id="workshopTotal">0 focused minutes collected</strong></div>
+          <div class="catalog-toolbar" role="group" aria-label="Filter catalog">
+            <button type="button" class="catalog-filter active" data-catalog-filter="all">All</button>
+            <button type="button" class="catalog-filter" data-catalog-filter="furniture">Furniture</button>
+            <button type="button" class="catalog-filter" data-catalog-filter="cozy">Cozy</button>
+            <button type="button" class="catalog-filter" data-catalog-filter="silly">Silly</button>
+          </div>
+          <div class="catalog-grid" id="catalogGrid" aria-live="polite"></div>
+          <div class="workshop-owned">
+            <div class="workshop-subheading"><strong>YOUR BUILT COLLECTION</strong><span id="builtCount">0 items</span></div>
+            <div class="workshop-inventory" id="workshopInventory"><span class="inventory-empty">Your first project is waiting in the catalog.</span></div>
+            <div class="placement-editor" id="placementEditor">
+              <label class="control-label" for="placementItem">PLACE AN ITEM</label>
+              <div class="placement-row"><select id="placementItem"><option value="">Build something first</option></select><select id="placementLocation" aria-label="Placement location"><option value="room-window">By the window</option><option value="room-corner">Room corner</option><option value="desk">Desk</option><option value="nightstand">Nightstand</option><option value="shelf">Display shelf</option></select><button type="button" class="workshop-save" id="placeItem">Place</button></div>
+              <p class="placement-note" id="placementNote">Large furniture belongs in the room. Small pieces can sit on furniture or the display shelf.</p>
+            </div>
+          </div>
+          <div class="workshop-goal">
+            <label class="control-label" for="workshopGoal">MAJOR PROJECT OR GOAL</label>
+            <input id="workshopGoal" type="text" maxlength="70" placeholder="e.g. Finish my science fair project" autocomplete="off">
+            <div class="workshop-goal-row">
+              <div class="workshop-decor-select">
+                <label class="control-label" for="workshopDecor">ASSIGN A DECORATION</label>
+                <select id="workshopDecor"><option value="">Unlock a decoration first</option></select>
+              </div>
+              <div class="workshop-target-select">
+                <label class="control-label" for="workshopTarget">TARGET</label>
+                <select id="workshopTarget">
+                  <option value="60">1 hour</option>
+                  <option value="120" selected>2 hours</option>
+                  <option value="180">3 hours</option>
+                  <option value="300">5 hours</option>
+                </select>
+              </div>
+            </div>
+            <button class="workshop-save" id="saveWorkshopGoal" type="button">Save project</button>
+            <div class="workshop-progress" id="workshopGoalProgress" hidden>
+              <div class="workshop-progress-top"><span id="workshopProgressLabel">Project progress</span><strong id="workshopProgressValue">0%</strong></div>
+              <div class="workshop-progress-track"><span id="workshopProgressFill"></span></div>
+              <p id="workshopProgressNote">Focus sessions linked to this goal will build progress.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="session-display">
+          <span id="panelTimerState">READY</span>
+          <strong id="panelTimerReadout">25:00</strong>
+        </div>
+        <label class="control-label">SESSION LENGTH</label>
+        <div class="duration-options" role="group" aria-label="Session length">
+          <button class="choice-button active" type="button" data-minutes="25">25 min</button>
+          <button class="choice-button" type="button" data-minutes="50">50 min</button>
+          <button class="choice-button" type="button" data-minutes="90">90 min</button>
+        </div>
+        <div class="custom-duration">
+          <label class="control-label" for="customMinutes">CUSTOM MINUTES</label>
+          <input id="customMinutes" type="number" min="1" max="180" value="25" inputmode="numeric">
+          <button class="quiet-button" id="applyCustom" type="button">Apply</button>
+        </div>
+        <div class="panel-actions">
+          <button class="panel-primary" id="timerStartPause" type="button">Start session</button>
+          <button class="panel-secondary" id="timerReset" type="button">Reset</button>
+        </div>
+        <p class="panel-footnote">If you leave this page, the timer pauses automatically.</p>
+      </section>
+
+      <section class="control-panel music-panel" id="musicPanel" role="dialog" aria-modal="true" aria-labelledby="musicTitle" aria-hidden="true">
+        <button class="panel-close" type="button" data-close-panel aria-label="Close music controls">×</button>
+        <p class="panel-eyebrow">ROOM 804 · SPEAKER</p>
+        <h2 id="musicTitle">Music & ambience</h2>
+        <p class="panel-description">Choose a quiet atmosphere, or bring a little music of your own. — Aster🌙</p>
+        <label class="control-label">AMBIENCE</label>
+        <div class="ambience-options" role="group" aria-label="Ambient sound">
+          <button class="choice-button active" type="button" data-sound="Off">Off</button>
+          <button class="choice-button" type="button" data-sound="Soft rain">Rain</button>
+          <button class="choice-button" type="button" data-sound="Night wind">Wind</button>
+          <button class="choice-button" type="button" data-sound="Room hum">Room hum</button>
+        </div>
+        <div class="music-divider"><span>OR PLAY YOUR OWN</span></div>
+        <label class="file-picker" for="audioFile">＋ Choose an audio file</label>
+        <input id="audioFile" class="visually-hidden" type="file" accept="audio/*">
+        <p class="selected-track" id="selectedTrack">No personal track selected</p>
+        <audio id="localAudio" preload="none"></audio>
+        <div class="panel-actions music-actions">
+          <button class="panel-primary" id="musicPlayPause" type="button" disabled>Play</button>
+          <button class="panel-secondary" id="musicStop" type="button">Stop</button>
+        </div>
+        <label class="control-label volume-label" for="musicVolume">VOLUME <span id="volumeValue">35%</span></label>
+        <input id="musicVolume" class="volume-slider" type="range" min="0" max="100" value="35">
+        <p class="panel-footnote">Audio files stay on your device; they are not uploaded.</p>
+      </section>
+
+      </div>
+
+      <section class="balcony-scene" id="balconyScene" aria-label="Room 804 balcony" hidden>
+        <div class="balcony-city" aria-hidden="true"></div>
+        <div class="balcony-atmosphere" aria-hidden="true"></div>
+        <header class="balcony-ui">
+          <div class="room-id"><span class="room-id-mark">☾</span><span>NOCTURNE <i></i> ROOM 804</span></div>
+          <button class="balcony-return" id="returnInside" type="button"><span aria-hidden="true">←</span> Return inside</button>
+        </header>
+        <section class="balcony-break-card" id="balconyBreakCard" hidden aria-live="polite">
+          <p class="balcony-eyebrow">NOCTURNE · RESET</p>
+          <h2>Take a breath.</h2>
+          <strong id="balconyBreakReadout">05:00</strong>
+          <p id="balconyBreakMessage">Take this moment to recollect your thoughts and breathe. — Aster🌙</p>
+          <button class="balcony-return balcony-break-return" id="breakReturnInside" type="button">Return to room</button>
+        </section>
+        <div class="balcony-caption" id="balconyCaption">
+          <p class="balcony-eyebrow">ROOM 804 · THE BALCONY</p>
+          <h1>A little closer<br>to the night.</h1>
+          <p>The same city. A little more room to breathe. — Aster🌙</p>
+        </div>
+        <div class="balcony-floor" aria-hidden="true"></div>
+        <div class="balcony-rail" aria-hidden="true"><div class="rail-top"></div><div class="rail-posts"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="balcony-side-glow" aria-hidden="true"></div>
+      </section>
+
+      <section class="aster-tour" id="asterTour" aria-label="Aster's welcome tour" hidden>
+        <div class="aster-portrait-wrap">
+          <img id="asterPortrait" src="assets/aster-welcome.png" alt="Aster, the Nocturne Hotel guide">
+          <span class="aster-name">ASTER</span>
+        </div>
+        <div class="aster-dialogue">
+          <div class="aster-dialogue-top"><span>ROOM 804 · HOTEL GUIDE</span><button id="skipTour" type="button">Skip tour</button></div>
+          <p id="asterLine" aria-live="polite"></p>
+          <div class="aster-dialogue-bottom"><span id="tourStep">WELCOME</span><button class="aster-next" id="nextTour" type="button">Next <span>→</span></button></div>
+        </div>
+      </section>
+      <div class="hover-tooltip" id="hoverTooltip" role="tooltip"></div>
+      <div class="interaction-toast" id="interactionToast" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
